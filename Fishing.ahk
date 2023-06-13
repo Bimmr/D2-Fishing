@@ -6,7 +6,7 @@ global MaxPerfectTries := 20   ; In Seconds
 global FishingPromptLocation := [840, 738]
 global PerfectPromptLocation := [900, 732]
 
-global PromptColors := [0x333333, 0xBCBCBC, 0xBCBCBB, 0xFFFFFF]
+global PromptColors := [0x333333, 0xBCBCBC, 0xBCBCBB, 0xFFFFFF, 0xC3C3C3, 0x3B3B3B]
 
 f3::
 {
@@ -51,7 +51,8 @@ watchForFishingPrompt(){
 	global
 
 	loop {
-		Color := PixelGetColor(FishingPromptLocation[1], FishingPromptLocation[2])	
+		Color := PixelGetColor(FishingPromptLocation[1], FishingPromptLocation[2])
+		;ToolTip(Format("Colour: {1}", Color), 10, 30, 2) ; DEBUG
 		if (HasVal(PromptColors, Color))
 			return true
 		Sleep(1000)
@@ -70,7 +71,8 @@ watchForPerfect(){
 	looping := true
 	tries := 0
 	loop MaxPerfectTries * 100 {
-		Color := PixelGetColor(PerfectPromptLocation[1], PerfectPromptLocation[2])		
+		Color := PixelGetColor(PerfectPromptLocation[1], PerfectPromptLocation[2])	
+		;ToolTip(Format("Colour: {1}", Color), 10, 30, 2) ; DEBUG
 		if (HasVal(PromptColors, Color)) {
 			return true
 		}
