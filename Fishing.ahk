@@ -1,7 +1,6 @@
 ﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 
-global MaxFishingTries := 10     ; In Seconds
 global MaxPerfectTries := 20   ; In Seconds
 
 global FishingPromptLocation := [840, 738]
@@ -33,14 +32,16 @@ startFishing(bait:= 500){
 	while(current < bait){
 		current++
 		ToolTip(Format("Looking for Fishing Prompt: {1}/{2}...", current, bait), 10, 10)
-		if (!watchForFishingPrompt()){
-			MsgBox("Unable to fish here.`nScript has been stopped.", "Auto Fishing", "Iconx")
-			Reload 
+		if (watchForFishingPrompt()){
+			ToolTip(Format("Fishing with bait: {1}/{2}...", current, bait), 10, 10)
+			castLine()
+			if (watchForPerfect())
+				Send "{e}"
+			else{
+				ToolTip("Was unable to catch fish after 20 seconds.")
+				Sleep(1000)
+			}
 		}
-		ToolTip(Format("Fishing with bait: {1}/{2}...", current, bait), 10, 10)
-		castLine()
-		if (watchForPerfect())
-			Send "{e}"
 	}
 	
 	ToolTip(Format("Done Fishing with {1} bait(s).", bait), 10, 10)
@@ -49,13 +50,12 @@ startFishing(bait:= 500){
 watchForFishingPrompt(){
 	global
 
-	loop MaxFishingTries{
+	loop {
 		Color := PixelGetColor(FishingPromptLocation[1], FishingPromptLocation[2])	
 		if (HasVal(PromptColors, Color))
 			return true
 		Sleep(1000)
 	}
-	return false	
 }
 
 castLine(){
