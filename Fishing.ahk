@@ -6,7 +6,7 @@ global MaxPerfectTries := 20   ; In Seconds
 global FishingPromptLocation := [840, 738]
 global PerfectPromptLocation := [900, 732]
 
-global PromptColors := [0x333333, 0xBCBCBC, 0xBCBCBB, 0xFFFFFF, 0xC3C3C3, 0x3B3B3B]
+global PromptColors := [0x333333, 0x3B3B3B, 0xBCBCBC, 0xBCBCBB, 0xC3C3C3, 0xFFFFFF ]
 
 f3::
 {
